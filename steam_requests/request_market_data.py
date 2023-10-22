@@ -5,6 +5,8 @@ import requests
 
 
 # Assuming the user is logged into the steam market in the browser, grab the steamSecureLogin cookie
+# This approach circumvents handling logins here, and avoids using steam's authentication or another library
+# Will probably be changed in the future
 def get_steam_login_cookie():
     url = 'steamcommunity.com'
     bc = browser_cookie3.Firefox(domain_name=url)
