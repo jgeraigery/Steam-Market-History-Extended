@@ -1,1 +1,1 @@
-# steam-market-history-scraper
+Web scraping is a strong word for this
