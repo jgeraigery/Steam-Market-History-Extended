@@ -1,0 +1,17 @@
+
+.filter-container {
+    max-width: 15vw;
+    min-width: 15vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 5vh;
+}
+
+.login-button {
+    margin: 1vh;
+}
+
+.load-data-button {
+    margin: 1vh;
+}
