@@ -1,4 +1,4 @@
-import './App.css';
+import '../styles/App.css';
 import FilterContainer from './FilterContainer';
 import TableContainer from './TableContainer';
 import LeftHeader from './LeftHeader';

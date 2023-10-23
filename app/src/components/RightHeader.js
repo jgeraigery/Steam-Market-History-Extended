@@ -1,4 +1,4 @@
-import './RightHeader.css';
+import '../styles/RightHeader.css';
 
 function RightHeader() {
     return (

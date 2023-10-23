@@ -1,4 +1,4 @@
-import './FilterContainer.css';
+import '../styles/FilterContainer.css';
 
 function FilterContainer() {
     return(

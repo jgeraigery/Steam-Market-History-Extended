@@ -1,4 +1,4 @@
-import './LeftHeader.css';
+import '../styles/LeftHeader.css';
 
 function LeftHeader() {
     return(

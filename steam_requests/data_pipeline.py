@@ -18,6 +18,7 @@ import json
     item_img: str
     third_party_img: str
 """
+FIELDS = ['game', 'name', 'gain_or_loss', 'third_party_name', 'listed_date', 'purchase_date', 'sale_price']
 
 # TO DO in here:
 # Grab image data
@@ -53,7 +54,13 @@ def parse_html_data(html: str):
         sale_price = row.find('span', class_='market_listing_price').text
         data['sale_price'] = sale_price.replace('\r', '').replace('\n', '').replace('\t', '').replace('$', '')
         transactions.append(data)
-    return transactions
+    final_data = {}
+    for i, t in enumerate(transactions):
+        final_data[f'item{i}'] = transactions[i]
+        final_data['count'] = '50'
+        final_data['fields'] = FIELDS
+        final_data['fieldCount'] = str(len(FIELDS))
+    return final_data
 
 
 def parse_object_data(obj_data):
@@ -67,8 +74,8 @@ raw_html = data['results_html']
 raw_json = data['assets']['730']['2']
 
 html_data = parse_html_data(raw_html)
-with open("market_data.txt", "w", encoding="utf-8") as f:
-    f.write(str(html_data))
+with open("market_data.json", "w", encoding="utf-8") as f:
+    json.dump(json.loads(str(html_data).replace("'", '"')), f, ensure_ascii=False)
     f.close()
 print(html_data)
 
