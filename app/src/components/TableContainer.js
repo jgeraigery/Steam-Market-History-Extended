@@ -20,7 +20,9 @@ function TableContainer() {
 
     return(
         <div className='table-container'>
-            <button onClick={getMarketData}>Load</button>
+            <div className='top-bar'>
+                <button className='app-button refresh-button' onClick={getMarketData}>Refresh</button>
+            </div>
             <Table data={tableData}/>
         </div>
     );

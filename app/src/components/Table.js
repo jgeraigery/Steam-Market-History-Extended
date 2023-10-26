@@ -24,7 +24,7 @@ function Table({ data }) {
             fields.push(res);
         };
         head = fields.map( f =>
-            <th>
+            <th className='head-entry'>
                 {f}
             </th>
         );
@@ -41,7 +41,7 @@ function Table({ data }) {
             };
 
             entries.push(current_entry.map( entry =>
-                    <td>
+                    <td className='body-entry'>
                         { entry }
                     </td>
                 )
@@ -55,11 +55,11 @@ function Table({ data }) {
     }
 
     return (
-        <table>
-            <thead>
+        <table className='table'>
+            <thead className='table-head'>
                 { head }
             </thead>
-            <tbody>
+            <tbody className='table-body'>
                 { body }
             </tbody>
         </table>

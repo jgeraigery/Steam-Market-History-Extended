@@ -1,0 +1,26 @@
+.table {
+    border: none;
+    border-radius: 10px;
+    margin-top: 1vh;
+    padding-top: 1vh;
+    background-color: #2d3641;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, .1),0 3px 6px rgba(0, 0, 0, .05);
+}
+
+.table-head {
+    color: white;
+    font-size: calc(2px + 0.6vh + 0.6vw);
+}
+
+.head-entry {
+    padding-bottom: 1vh;
+}
+
+.table-body {
+    color: white;
+}
+
+.body-entry {
+    padding-bottom: 1vh;
+}
+

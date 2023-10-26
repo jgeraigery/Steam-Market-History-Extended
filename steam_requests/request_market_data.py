@@ -14,7 +14,7 @@ def get_steam_login_cookie():
 
     steam_login_key = ''
     for cookie in cookie_jar:
-        if cookie.name == 'steamLoginSecure':
+        if 'steamLoginSecure' in cookie.name:
             steam_login_key = cookie.value
             break
     if steam_login_key == '':
