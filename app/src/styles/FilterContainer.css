@@ -5,13 +5,10 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     padding-top: 5vh;
 }
 
 .login-button {
-    margin: 1vh;
-}
-
-.load-data-button {
     margin: 1vh;
 }

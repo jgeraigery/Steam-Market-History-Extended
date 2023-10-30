@@ -1,10 +1,12 @@
 import '../styles/TableContainer.css';
 import React, { useState } from 'react';
 import Table from './Table'
+import TableSizeDropdown from './TableSizeDropdown';
 
 function TableContainer() {
 
     const [tableData, setTableData] = useState(null);
+    const [tableSize, setTableSize] = useState(50);
 
     function getMarketData() {
         const xhr = new XMLHttpRequest();
@@ -22,6 +24,7 @@ function TableContainer() {
         <div className='table-container'>
             <div className='top-bar'>
                 <button className='app-button refresh-button' onClick={getMarketData}>Refresh</button>
+                <TableSizeDropdown handleClick={setTableSize} val={tableSize}/>
             </div>
             <Table data={tableData}/>
         </div>

@@ -10,8 +10,8 @@
 .top-bar {
     display: flex;
     flex-direction: row;
-    justify-content: left;
-    margin: 0vh 2vw;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .refresh-button {

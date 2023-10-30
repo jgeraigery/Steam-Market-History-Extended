@@ -8,7 +8,7 @@ function Table({ data }) {
     
     if (data === null) {
         return (
-            <p>
+            <p className='null-table'>
                 No Data Loaded
             </p>
         )
@@ -24,8 +24,11 @@ function Table({ data }) {
             fields.push(res);
         };
         head = fields.map( f =>
-            <th className='head-entry'>
-                {f}
+            <th>
+                <button className='head-entry'>
+                    {f}
+                </button>
+
             </th>
         );
 
@@ -56,8 +59,10 @@ function Table({ data }) {
 
     return (
         <table className='table'>
-            <thead className='table-head'>
-                { head }
+            <thead className='table-header'>
+                <tr className='table-header'>
+                    { head }
+                </tr>
             </thead>
             <tbody className='table-body'>
                 { body }
