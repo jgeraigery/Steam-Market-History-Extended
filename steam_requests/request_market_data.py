@@ -2,11 +2,13 @@ import browser_cookie3
 import json
 import logging
 import requests
+import time
 
 
 # Assuming the user is logged into the steam market in the browser, grab the steamSecureLogin cookie
 # This approach circumvents handling logins here, and avoids using steam's authentication or another library
-# Will probably be changed in the future
+# Will probably be changed in the future, since the server has to be running on the users computer
+# It works for a local approach, but kind of negates the reason to use a backend server
 def get_steam_login_cookie():
     url = 'steamcommunity.com'
     bc = browser_cookie3.Firefox(domain_name=url)
@@ -26,13 +28,28 @@ def get_steam_login_cookie():
 def get_market_history(steam_login_key: str):
     url = 'https://steamcommunity.com/market/myhistory/'
     cookie = {'steamLoginSecure': steam_login_key}
-    params = {'start': 1, 'count': 100}
+    params = {'start': 0, 'count': 500}
     try:
         response = requests.get(url, params=params, cookies=cookie)
     except Exception as e:
         logging.error(e)
-    return response.json()
-
+    res = response.json()
+    # Get rest of data, based on total transaction count from the response
+    total_count = res['total_count'] - 500
+    print(total_count)
+    final_loop_count = total_count % 500; 
+    loops = int((total_count - final_loop_count) / 500)
+    responses = {'page0': res['results_html']}
+    for i in range(loops + 1):
+        params = {'start:': 500 * i, 'count': 500}
+        try:
+            response = requests.get(url, params=params, cookies=cookie)
+            time.sleep(5)
+        except Exception as e:
+            logging.error(e)
+        responses['page' + str(i + 1)] = response.json()['results_html']
+    return responses
+    
 # Main code
 
 # Grab steam login key

@@ -40,7 +40,7 @@ function Table({ data }) {
 
             // Convert entry dictionary into a list
             for (let j = 0; j < data['fieldCount']; j++) {
-                current_entry.push(data['item' + i][data['fields'][j]]);
+                current_entry.push(data['transaction_list'][i][data['fields'][j]]);
             };
 
             entries.push(current_entry.map( entry =>

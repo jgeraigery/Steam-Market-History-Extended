@@ -54,29 +54,33 @@ def parse_html_data(html: str):
         sale_price = row.find('span', class_='market_listing_price').text
         data['sale_price'] = sale_price.replace('\r', '').replace('\n', '').replace('\t', '').replace('$', '')
         transactions.append(data)
-    final_data = {}
-    for i, t in enumerate(transactions):
-        final_data[f'item{i}'] = transactions[i]
-        final_data['count'] = '50'
-        final_data['fields'] = FIELDS
-        final_data['fieldCount'] = str(len(FIELDS))
-    return final_data
-
-
-def parse_object_data(obj_data):
-    pass
+    return transactions
 
 # MAIN CODE
 
 f = open('./res.json')
 data = json.load(f)
-raw_html = data['results_html']
-raw_json = data['assets']['730']['2']
 
-html_data = parse_html_data(raw_html)
+raw_html = []
+page = 'page0'
+page_num = 1
+while page in data:
+    raw_html.append(data[page])
+    page = 'page' + str(page_num)
+    page_num += 1
+
+transactions = []
+for p in raw_html:
+    transaction_list = parse_html_data(p)
+    for i, t in enumerate(transaction_list):
+        transactions.append(t)
+
+final_data = {}
+final_data['transaction_list'] = transactions
+final_data['count'] = '500'
+final_data['fields'] = FIELDS
+final_data['fieldCount'] = str(len(FIELDS))
+
 with open("market_data.json", "w", encoding="utf-8") as f:
-    json.dump(json.loads(str(html_data).replace("'", '"')), f, ensure_ascii=False)
+    json.dump(final_data, f, indent=4)
     f.close()
-print(html_data)
-
-parse_object_data(raw_json)

@@ -6,15 +6,14 @@ import TableSizeDropdown from './TableSizeDropdown';
 function TableContainer() {
 
     const [tableData, setTableData] = useState(null);
-    const [tableSize, setTableSize] = useState(50);
+    const [tableSize, setTableSize] = useState(500);
 
     function getMarketData() {
         const xhr = new XMLHttpRequest();
-        xhr.open('GET', 'http://127.0.0.1:8000/get_market_data');
+        xhr.open('GET', 'http://127.0.0.1:8000/get_market_data/?amount=' + tableSize.toString());
         xhr.onload = function() {
             if (xhr.status === 200) {
                 setTableData(JSON.parse(xhr.responseText));
-                //console.log(tableData)
             }
         };
         xhr.send();

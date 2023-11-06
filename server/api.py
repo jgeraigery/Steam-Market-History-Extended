@@ -30,11 +30,20 @@ app.add_middleware(
 def read_root():
     return {'Hello': 'World'}
 
-@app.get('/get_market_data')
-def get_market_data():
+@app.get('/get_market_data/')
+def get_market_data(amount: int = 500):
     f = open('./market_data.json', 'r', encoding='utf-8')
     data = json.load(f)
-    print(type(data))
+    transaction_list = data['transaction_list']
+    new_list = []
+    for i, t in enumerate(transaction_list):
+        if i > amount - 1: 
+            break
+        new_list.append(t)
+    data['transaction_list'] = new_list
+    data['count'] = amount
+    print(data)
+    print(len(data['transaction_list']))
     return data
 
 # Starts server
