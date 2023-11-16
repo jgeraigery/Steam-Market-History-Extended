@@ -21,6 +21,9 @@ function Table({ data }) {
             let res = data['fields'][i];
             res = res.replaceAll("_", " ");
             res = res.charAt(0).toUpperCase() + res.slice(1);
+            if (res === 'Gain or loss') {
+                res = 'Type';
+            }
             fields.push(res);
         };
         head = fields.map( f =>

@@ -8,10 +8,10 @@
 .drop-down-value {
     display: inline-block;
     width: 100%;
-    background-color: #868d96;
-    padding: 3px 3px;
-    border: solid black 2px;
-    border-radius: 5px;
+    background-color: #bac6d8;
+    padding: 1px 1px;
+    border: solid rgb(32, 32, 32) 3px;
+    border-radius: 4px;
 }
 
 .drop-down-value:hover {
@@ -21,12 +21,12 @@
 .drop-down-content {
     display: none;
     position: absolute;
-    top: 30px;
+    top: 28px;
     right: 0px;
     flex-direction: column;
     background-color: #2d3641;
-    border: 2px solid black;
-    border-radius: 8px;
+    border: 2px solid rgb(32, 32, 32);
+    border-radius: 3px;
     min-width: 100px;
     padding: 8px 8px;
 }

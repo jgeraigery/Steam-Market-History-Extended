@@ -1,11 +1,7 @@
-from typing import Union
-
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 import uvicorn
-import os
-import csv
 import json
 
 app = FastAPI()
@@ -42,8 +38,6 @@ def get_market_data(amount: int = 500):
         new_list.append(t)
     data['transaction_list'] = new_list
     data['count'] = amount
-    print(data)
-    print(len(data['transaction_list']))
     return data
 
 # Starts server

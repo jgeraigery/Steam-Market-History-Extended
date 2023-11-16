@@ -7,7 +7,7 @@
     padding-top: 1vh;
     padding-bottom: 1vh;
     background-color: #2d3641;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, .1),0 3px 6px rgba(0, 0, 0, .05);
+    box-shadow: 0px 0px 10px 7px rgb(0,0,0,0.1);
 }
 
 .null-table {
@@ -17,6 +17,7 @@
     padding-top: 1vh;
     padding-bottom: 1vh;
     background-color: #2d3641;
+    min-height: 70vh;
 }
 
 .table-header {
@@ -46,5 +47,6 @@
 .body-entry {
     padding-top: 1vh;
     padding-bottom: 1vh;
+    max-width: 8vw;
 }
 
