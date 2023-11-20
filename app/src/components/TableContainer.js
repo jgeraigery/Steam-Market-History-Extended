@@ -1,20 +1,29 @@
 import '../styles/TableContainer.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Table from './Table'
 import TableSizeDropdown from './TableSizeDropdown';
 
-function TableContainer({filters}) {
+function TableContainer({query, queryType}) {
 
     const [tableData, setTableData] = useState(null);
     const [tableSize, setTableSize] = useState(500);
 
+    useEffect(
+        () => {
+            getMarketData();
+        }, [query, queryType]
+    )
+
     function applyFilters(data) {
+        if (data === null) {
+            return null;
+        }
         // Tracks size of filtered list
         let new_count = data['count'];
 
         // Unpack the filters
-        let queryLabel = filters['queryType'];
-        let queryString = filters['query'].toLowerCase();
+        let queryLabel = queryType;
+        let queryString = query.toLowerCase();
 
         // Approach: Look through each individual transaction and decide if it should stay
         // This applies filters sequentially to one transaction at a time
@@ -45,7 +54,6 @@ function TableContainer({filters}) {
             )
             let res = await response.json();
 
-            // JS weirdness- Can probably deprecate this eventually
             res = applyFilters(JSON.parse(JSON.stringify(res)));
 
             setTableData(res);
@@ -58,7 +66,7 @@ function TableContainer({filters}) {
     return(
         <div className='table-container'>
             <div className='top-bar'>
-                <button className='app-button refresh-button' onClick={getMarketData}>Refresh</button>
+                <button className='app-button refresh-button' onMouseDown={(e) => e.preventDefault()} onClick={getMarketData}>Refresh</button>
                 <TableSizeDropdown handleClick={setTableSize} val={tableSize}/>
             </div>
             <Table data={tableData}/>

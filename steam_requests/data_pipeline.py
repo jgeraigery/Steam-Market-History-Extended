@@ -18,7 +18,7 @@ import json
     item_img: str
     third_party_img: str
 """
-FIELDS = ['game', 'name', 'gain_or_loss', 'third_party_name', 'listed_date', 'purchase_date', 'sale_price']
+FIELDS = ['game', 'name', 'gain_or_loss', 'third_party_name', 'third_party_img', 'listed_date', 'purchase_date', 'sale_price']
 
 # TO DO in here:
 # Grab image data
@@ -42,6 +42,12 @@ def parse_html_data(html: str):
         if seller_name != None:
             seller_name = seller_name.text.replace('\r', '').replace('\n', '').replace('\t', '').replace('Buyer:', '').replace('Seller:', '')
         data['third_party_name'] = seller_name
+
+        seller_img_span = row.find('span', class_='market_listing_owner_avatar')
+        seller_img = ''
+        if seller_img_span != None:
+            seller_img = seller_img_span.img['src']
+        data['third_party_img'] = seller_img
 
         listed_date = row.find('div', class_='market_listing_listed_date').text
         data['listed_date'] = listed_date.replace('\r', '').replace('\n', '').replace('\t', '')

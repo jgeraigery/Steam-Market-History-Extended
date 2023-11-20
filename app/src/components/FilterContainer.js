@@ -1,7 +1,7 @@
 import '../styles/FilterContainer.css';
 import React, { useState } from 'react';
 
-function FilterContainer({setFilters}) {
+function FilterContainer({setAppFilters}) {
 
     // Local filter state, updates the global filter state when apply filters button is pressed
     const [currentFilters, setCurrentFilters] = useState(
@@ -37,7 +37,7 @@ function FilterContainer({setFilters}) {
                 <h2 className='filter-text'>Filters</h2>
             </div>
             <div className='filters'>
-                <button className='filter-item app-button' onClick={() => setFilters(currentFilters)}>Apply Filters</button>
+                <button className='filter-item app-button' onMouseDown={(e) => e.preventDefault()} onClick={() => setAppFilters(currentFilters)}>Apply Filters</button>
                 <div className='filter-item'>
                     <label className='filter-text'>Search by:  </label>
                     <select className='select-box' onChange={e => setQueryTypeWrapper(e.target.value)}>

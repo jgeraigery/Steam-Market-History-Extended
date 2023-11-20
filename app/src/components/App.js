@@ -5,14 +5,15 @@ import TableContainer from './TableContainer';
 import LeftHeader from './LeftHeader';
 import RightHeader from './RightHeader';
 
-
-
 function App() {
 
-  const [filters, setFilters] = useState({
-    'queryType': 'name',
-    'query': '',
-  });
+  const [queryType, setQueryType] = useState('name');
+  const [query, setQuery] = useState('');
+
+  function setFiltersWrapper(val) {
+    setQueryType(val['queryType']);
+    setQuery(val['query']);
+  }
 
   return (
     <div className="app">
@@ -21,8 +22,8 @@ function App() {
         <RightHeader />
       </header>
       <body className="app-body">
-        <FilterContainer setFilters={setFilters}/>
-        <TableContainer filters={filters}/>
+        <FilterContainer setAppFilters={setFiltersWrapper}/>
+        <TableContainer queryType={queryType} query={query}/>
       </body>
     </div>
   );

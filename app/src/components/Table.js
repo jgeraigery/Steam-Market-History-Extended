@@ -5,16 +5,15 @@ function Table({ data }) {
 
     let head = null;
     let body = null;
-    
+
     if (data === null) {
         return (
             <p className='null-table'>
                 No Data Loaded
             </p>
         )
-    } 
-    else 
-    {
+    }
+    else {
         // Build Head
         let fields = []
         for (let i = 0; i < data['fieldCount']; i++) {
@@ -26,7 +25,7 @@ function Table({ data }) {
             }
             fields.push(res);
         };
-        head = fields.map( f =>
+        head = fields.map(f =>
             <th>
                 <button className='head-entry'>
                     {f}
@@ -43,19 +42,23 @@ function Table({ data }) {
 
             // Convert entry dictionary into a list
             for (let j = 0; j < data['fieldCount']; j++) {
-                current_entry.push(data['transaction_list'][i][data['fields'][j]]);
+                if (data['fields'][j] === 'third_party_img') {
+                    current_entry.push(<img src={data['transaction_list'][i][data['fields'][j]]}></img>)
+                } else {
+                    current_entry.push(data['transaction_list'][i][data['fields'][j]]);
+                }
             };
 
-            entries.push(current_entry.map( entry =>
-                    <td className='body-entry'>
-                        { entry }
-                    </td>
-                )
+            entries.push(current_entry.map(entry =>
+                <td className='body-entry'>
+                    {entry}
+                </td>
+            )
             )
         };
-        body = entries.map( entry => 
+        body = entries.map(entry =>
             <tr>
-                { entry }
+                {entry}
             </tr>
         );
     }
@@ -64,11 +67,11 @@ function Table({ data }) {
         <table className='table'>
             <thead className='table-header'>
                 <tr className='table-header'>
-                    { head }
+                    {head}
                 </tr>
             </thead>
             <tbody className='table-body'>
-                { body }
+                {body}
             </tbody>
         </table>
     );
