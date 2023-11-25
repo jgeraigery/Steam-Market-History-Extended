@@ -7,12 +7,29 @@ import RightHeader from './RightHeader';
 
 function App() {
 
-  const [queryType, setQueryType] = useState('name');
-  const [query, setQuery] = useState('');
+  console.log('App Render')
+
+  // Global filters
+  const [currentFilters, setCurrentFilters] = useState(
+    {
+        'queryType': 'name',
+        'query': '',
+        'transactionType': 'all',
+    }
+  );
+  // Tracks and controls table reloads
+  const [reload, setReload] = useState(0);
 
   function setFiltersWrapper(val) {
-    setQueryType(val['queryType']);
-    setQuery(val['query']);
+    // Check if values changed - Unsafe, so order matters
+    console.log('App: ');
+    console.log(JSON.stringify(currentFilters));
+    console.log(JSON.stringify(val));
+    if (JSON.stringify(currentFilters) !== JSON.stringify(val)) {
+      console.log('Filters updated');
+      setCurrentFilters(structuredClone(val));
+      setReload(reload + 1);
+    }
   }
 
   return (
@@ -21,10 +38,10 @@ function App() {
         <LeftHeader />
         <RightHeader />
       </header>
-      <body className="app-body">
+      <div className="app-body">
         <FilterContainer setAppFilters={setFiltersWrapper}/>
-        <TableContainer queryType={queryType} query={query}/>
-      </body>
+        <TableContainer reload={reload} queryType={currentFilters['queryType']} query={currentFilters['query']} transactionType={currentFilters['transactionType']}/>
+      </div>
     </div>
   );
 }

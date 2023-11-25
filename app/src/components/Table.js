@@ -3,6 +3,8 @@ import React from 'react';
 
 function Table({ data }) {
 
+    console.log('Table Render');
+
     let head = null;
     let body = null;
 
@@ -25,12 +27,12 @@ function Table({ data }) {
             }
             fields.push(res);
         };
+        let hpos = 0;
         head = fields.map(f =>
-            <th>
+            <th key={'tablehead' + hpos++}>
                 <button className='head-entry'>
                     {f}
                 </button>
-
             </th>
         );
 
@@ -48,16 +50,17 @@ function Table({ data }) {
                     current_entry.push(data['transaction_list'][i][data['fields'][j]]);
                 }
             };
-
+            let bdpos = 0;
             entries.push(current_entry.map(entry =>
-                <td className='body-entry'>
+                <td key={data['transaction_list'][i]['id'] + '' + bdpos++} className='body-entry'>
                     {entry}
                 </td>
             )
             )
         };
+        let bpos = 0;
         body = entries.map(entry =>
-            <tr>
+            <tr key={'row' + data['transaction_list'][bpos++]['id']}>
                 {entry}
             </tr>
         );
@@ -66,7 +69,7 @@ function Table({ data }) {
     return (
         <table className='table'>
             <thead className='table-header'>
-                <tr className='table-header'>
+                <tr key='headrow' className='table-header'>
                     {head}
                 </tr>
             </thead>
