@@ -27,10 +27,18 @@ def read_root():
     return {'Hello': 'World'}
 
 @app.get('/get_market_data/')
-def get_market_data(amount: int = 500):
+def get_market_data(amount):
+
     f = open('./market_data.json', 'r', encoding='utf-8')
     data = json.load(f)
     transaction_list = data['transaction_list']
+
+    if amount not in ['50', '100', '200', '300', '400', '500', 'All']:
+        amount = 50
+    elif amount == 'All':
+        amount = data['count']
+    amount = int(amount)
+
     new_list = []
     for i, t in enumerate(transaction_list):
         if i > amount - 1: 
@@ -38,6 +46,7 @@ def get_market_data(amount: int = 500):
         new_list.append(t)
     data['transaction_list'] = new_list
     data['count'] = amount
+
     return data
 
 # Starts server

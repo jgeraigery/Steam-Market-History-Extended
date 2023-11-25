@@ -23,31 +23,33 @@ def get_steam_login_cookie():
         print("Couldn't find login cookie")
     else:
         return steam_login_key
+    
+def get_page(steam_login_key: str, start: int, count: int):
+    url = 'https://steamcommunity.com/market/myhistory/'
+    cookie = {'steamLoginSecure': steam_login_key}
+    params = {'start': start, 'count': count}
+    try:
+        response = requests.get(url, params=params, cookies=cookie, timeout=10)
+    except Exception as e:
+        print('Request failed')
+        logging.error(e)
+    print('Response recieved')
+    return response.json()
 
 # Requests steam market history from the steam API with the specified login key
 def get_market_history(steam_login_key: str):
-    url = 'https://steamcommunity.com/market/myhistory/'
-    cookie = {'steamLoginSecure': steam_login_key}
-    params = {'start': 0, 'count': 500}
-    try:
-        response = requests.get(url, params=params, cookies=cookie)
-    except Exception as e:
-        logging.error(e)
-    res = response.json()
+    page0 = get_page(steam_login_key, 0, 500)
     # Get rest of data, based on total transaction count from the response
-    total_count = res['total_count'] - 500
-    print(total_count)
-    final_loop_count = total_count % 500; 
-    loops = int((total_count - final_loop_count) / 500)
-    responses = {'page0': res['results_html']}
-    for i in range(loops + 1):
-        params = {'start:': 500 * i, 'count': 500}
-        try:
-            response = requests.get(url, params=params, cookies=cookie)
-            time.sleep(5)
-        except Exception as e:
-            logging.error(e)
-        responses['page' + str(i + 1)] = response.json()['results_html']
+    remaining_pages = page0['total_count'] - 500
+    final_page_size = remaining_pages % 500; 
+    loops = int((remaining_pages - final_page_size) / 500)
+    responses = {'json': None, 'page0': page0['results_html']}
+    for i in range(loops):
+        response = get_page(steam_login_key, (500 * (i + 1)), 500)
+        responses['page' + str(i + 1)] = response['results_html']
+    final_page = get_page(steam_login_key, (page0['total_count'] - final_page_size), final_page_size)
+    responses['page' + str(loops + 1)] = final_page['results_html']
+    responses['total_count'] = page0['total_count']
     return responses
     
 # Main code
