@@ -32,9 +32,7 @@ function LeftHeader() {
                     </div>
                 </div>
                 <div className='header-title'>
-                    <h>
                         Market History+
-                    </h>
                 </div>
                 
             </div>
