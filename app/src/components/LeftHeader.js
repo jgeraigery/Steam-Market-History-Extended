@@ -22,14 +22,8 @@ function LeftHeader() {
                         <p>Documentation</p>
                     </div>
                 </div>
-                <div className='dropdown header-item'>
-                    <span>
-                        Instructions
-                    </span>
-                    <div className='dropdown-content'>
-                        <p>First, login to Steam on your browser.</p>
-                        <p>Then, press 'Load Market Data'.</p>
-                    </div>
+                <div className='header-item stats-link'>
+                    Statistics
                 </div>
                 <div className='header-title'>
                         Market History+

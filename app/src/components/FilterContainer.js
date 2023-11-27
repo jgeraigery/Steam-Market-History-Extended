@@ -61,6 +61,7 @@ function FilterContainer({setAppFilters}) {
                         <option value='name'>Item Name</option>
                         <option value='game'>Game</option>
                         <option value='third_party_name'>Third Party Name</option>
+                        <option value='id'>ID</option>
                     </select>
                 </div>
                 <input className='filter-item search-box' onChange={e => setQueryWrapper(e.target.value)}></input>
@@ -68,8 +69,10 @@ function FilterContainer({setAppFilters}) {
                     <label className='filter-text'>Transaction type: </label>
                     <select className='select-box' onChange={e => setTransactionTypeWrapper(e.target.value)}>
                         <option value='all'>All</option>
-                        <option value='-'>Sale</option>
-                        <option value='+'>Purchase</option>
+                        <option value='Sale'>Sale</option>
+                        <option value='Purchase'>Purchase</option>
+                        <option value='Listing'>Listing</option>
+                        <option value='Cancellation'>Cancellation</option>
                     </select>
                 </div>
             </div>

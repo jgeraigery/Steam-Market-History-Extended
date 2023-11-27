@@ -33,6 +33,7 @@
 
 .drop-down:hover .drop-down-content {
     display: flex;
+    z-index: 1;
 }
 
 .drop-down-button {

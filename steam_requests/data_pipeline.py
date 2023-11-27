@@ -8,6 +8,7 @@ import json
     # Item info
     game: str
     name: str
+    item_img: str (link)
 
     # General info
     gain_or_loss: str
@@ -21,7 +22,7 @@ import json
     item_img: str
     third_party_img: str
 """
-FIELDS = ['game', 'name', 'gain_or_loss', 'third_party_name', 'third_party_img', 'listed_date', 'purchase_date', 'sale_price']
+FIELDS = ['id', 'game', 'name', 'item_img', 'third_party_name', 'third_party_img', 'gain_or_loss', 'listed_date', 'purchase_date', 'sale_price']
 
 # TO DO in here:
 # Grab image data
@@ -39,20 +40,29 @@ def parse_html_data(html: str, identifier: int):
 
         data['game'] = row.find('span', class_='market_listing_game_name').text
         data['name'] = row.find('span', class_='market_listing_item_name').text
+        item_image = row.find('img', class_='market_listing_item_img')
+        if item_image:
+            data['item_img'] = item_image['src']
+        else:
+            data['item_img'] = ''
 
         gain_or_loss = row.find('div', class_='market_listing_gainorloss').text
-        gol_value = ''
+        gol_value = 'Listing'
         if '+' in gain_or_loss:
-            gol_value = '+'
+            gol_value = 'Purchase'
         elif '-' in gain_or_loss:
-            gol_value = '-'
+            gol_value = 'Sale'
         data['gain_or_loss'] = gol_value
 
         seller_name = row.find('div', class_='market_listing_whoactedwith_name_block')
         if seller_name != None:
             seller_name = seller_name.text.replace('\r', '').replace('\n', '').replace('\t', '').replace('Buyer:', '').replace('Seller:', '')
         else:
-            seller_name = 'Listing created'
+            seller_name = row.find('div', class_='market_listing_whoactedwith')
+            if seller_name != None:
+                seller_name = seller_name.text.replace('\r', '').replace('\n', '').replace('\t', '')
+                if seller_name == 'Listing canceled':
+                    data['gain_or_loss'] = 'Cancellation'
         data['third_party_name'] = seller_name
 
         seller_img_span = row.find('span', class_='market_listing_owner_avatar')

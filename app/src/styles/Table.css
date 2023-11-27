@@ -1,7 +1,8 @@
-.table {
-    border-radius: 10px;
-    box-sizing: border-box;
-    border-collapse: collapse;
+table {
+    position: relative;
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse; 
     margin-top: 1vh;
     margin-bottom: 1vh;
     padding-top: 1vh;
@@ -20,9 +21,39 @@
     min-height: 70vh;
 }
 
-.table-header {
-    border-bottom: 2px solid #475361;
+thead {
+    pointer-events: none;
 }
+
+tbody {
+    color: white;
+}
+
+th {
+    background-color: #262d36;
+    position: sticky;
+    top: 0px;
+}
+
+tr {
+    min-height: 10vh;
+}
+
+tr:hover {
+    background-color: rgb(64, 72, 85);
+}
+
+tr:hover td {
+    background-color: transparent;
+}
+
+td {
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    max-width: 8vw;
+}
+
+/* Styling for head buttons */
 
 .head-entry {
     color:#afb7c0;
@@ -36,17 +67,81 @@
     margin-bottom: 1vh;
 }
 
-.head-entry:hover {
-    cursor:pointer;
+/* Styling for combined rows */
+
+.combined-entry {
+    display: flex;
+    justify-content: left;
+    align-items: center;
 }
 
-.table-body {
-    color: white;
+.third-party-name {
+    margin-left: 0.5vw;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
-.body-entry {
-    padding-top: 1vh;
-    padding-bottom: 1vh;
-    max-width: 8vw;
+.third-party-img {
+    border: solid black 2px;
+    border-radius: 4px;
+    margin-left: 1vw;
 }
 
+.item-name {
+    margin-left: 0.5vw;
+    white-space: nowrap;
+}
+
+.item-img {
+    margin-left: 2vw;
+}
+
+/* Individual styling */
+
+tr td:first-child {
+    font-weight: 1000;
+    text-align: left;
+    text-indent: 1vw;
+}
+
+th:first-child {
+    width: 5%;
+    text-align: left;
+    text-indent: 20%;
+}
+
+th:nth-child(2) {
+    width: 10%;
+}
+
+th:nth-child(3) {
+    width: 35%;
+    text-align: left;
+    text-indent: 2vw;
+}
+
+th:nth-child(4) {
+    width: 20%;
+    text-align: left;
+    text-indent: 1vw;
+}
+
+th:nth-child(5) {
+    width: 10%;
+}
+
+th:nth-child(6) {
+    width: 10%;
+}
+
+th:nth-child(7) {
+    width: 10%;
+}
+
+th:nth-child(8) {
+    width: 10%;
+}
+
+tr td:nth-child(5) {
+    overflow:hidden;
+}

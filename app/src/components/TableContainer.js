@@ -6,7 +6,7 @@ import TableSizeDropdown from './TableSizeDropdown';
 function TableContainer({reload=0, query, queryType, transactionType}) {
 
     const [tableData, setTableData] = useState(null);
-    const [tableSize, setTableSize] = useState(500);
+    const [tableSize, setTableSize] = useState(50);
 
     useEffect(
         () => {
@@ -15,11 +15,16 @@ function TableContainer({reload=0, query, queryType, transactionType}) {
             console.log(query);
             console.log(transactionType);
             console.log(reload);
-            getMarketData();
+            getMarketData(tableSize);
         }, [reload]
     )
 
     console.log('TableContainer Render');
+
+    function handleDropdownClick(val) {
+        setTableSize(val);
+        getMarketData(val);
+    }
 
     function applyFilters(data) {
         if (data === null) {
@@ -62,9 +67,9 @@ function TableContainer({reload=0, query, queryType, transactionType}) {
         return data;
     }
 
-    async function getMarketData() {
+    async function getMarketData(amount) {
         try {
-            const response = await fetch('http://127.0.0.1:8000/get_market_data/?amount=' + tableSize.toString(),
+            const response = await fetch('http://127.0.0.1:8000/get_market_data/?amount=' + amount.toString(),
                 {
                     method: 'GET',
                     mode: 'cors',
@@ -84,8 +89,9 @@ function TableContainer({reload=0, query, queryType, transactionType}) {
     return(
         <div className='table-container'>
             <div className='top-bar'>
-                <button className='app-button refresh-button' onMouseDown={(e) => e.preventDefault()} onClick={getMarketData}>Refresh</button>
-                <TableSizeDropdown handleClick={setTableSize} val={tableSize}/>
+                <button className='app-button refresh-button' onMouseDown={(e) => e.preventDefault()} onClick={() => getMarketData(tableSize)}>Refresh</button>
+
+                <TableSizeDropdown handleClick={handleDropdownClick} val={tableSize}/>
             </div>
             <Table data={tableData}/>
         </div>
