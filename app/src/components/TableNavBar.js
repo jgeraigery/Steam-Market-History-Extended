@@ -29,7 +29,11 @@ function TableNavBar({pageIndex, changePageIndex, numPages}) {
 
     function submitPageIndex(e) {
         e.preventDefault();
-        changePageIndex(inputValue - 1);
+        if (Number.isInteger(inputValue)) {
+            changePageIndex(inputValue - 1);
+        } else {
+            setInputValue('');
+        }
     }
 
     function handleBack() {
@@ -50,15 +54,15 @@ function TableNavBar({pageIndex, changePageIndex, numPages}) {
 
     return (
         <div className='nav-bar'>
-            <button onClick={handleFirst} className='back-button'>{'<<'}</button>
-            <button onClick={handleBack} className='back-button'>{'<'}</button>
+            <button onClick={handleFirst} className='app-button nav-button' onMouseDown={(e) => e.preventDefault()}>{'<<'}</button>
+            <button onClick={handleBack} className='app-button nav-button' onMouseDown={(e) => e.preventDefault()}>{'<'}</button>
             <form className='page-nav' onSubmit={(e) => submitPageIndex(e)}>
                 <label className='page-label'>Page: </label>
                 <input className='page-input' value={inputValue} onChange={(e) => handlePageIndexChange(e)}></input>
-                <label className='page-label'>/{labelValue}</label>
+                <label className='page-label'> / {labelValue}</label>
             </form>
-            <button onClick={handleForward} className='forward-button'>{'>'}</button>
-            <button onClick={handleLast} className='forward-button'>{'>>'}</button>
+            <button onClick={handleForward} className='app-button nav-button' onMouseDown={(e) => e.preventDefault()}>{'>'}</button>
+            <button onClick={handleLast} className='app-button nav-button' onMouseDown={(e) => e.preventDefault()}>{'>>'}</button>
         </div>
     );
 };

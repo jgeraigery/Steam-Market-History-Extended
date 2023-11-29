@@ -7,9 +7,6 @@ import TableNavBar from './TableNavBar';
 function TableContainer({reload=0, query, queryType, transactionType}) {
     /* STATES */
 
-    // State of loaded data
-    const [data, setData] = useState(null);
-
     // State of filtered data
     const [filteredData, setFilteredData] = useState(null);
 
@@ -24,18 +21,12 @@ function TableContainer({reload=0, query, queryType, transactionType}) {
         () => {
             setPageIndex(
                 0, 
-                filterAndGeneratePage()
+                getMarketData()
             )
         }, [reload]
     );
 
     /* HANDLE DATA FETCHING */
-    useEffect(
-        () => {
-            filterAndGeneratePage();
-        }, [data]
-    );
-
     useEffect(
         () => {
             setNumPages(calcNumPages);
@@ -80,10 +71,12 @@ function TableContainer({reload=0, query, queryType, transactionType}) {
     }
 
     function handlePageIndexChange(val) {
-        if (val >= 0 && val < numPages) {
+        if (Number.isInteger(val) && val >= 0 && val < numPages) {
             setPageIndex(val);
-        } else {
+        } else if (val > numPages || val == -1) {
             setPageIndex(numPages - 1,);
+        } else {
+            setPageIndex(0);
         }
     }
 
@@ -124,7 +117,7 @@ function TableContainer({reload=0, query, queryType, transactionType}) {
         // This applies filters sequentially to one transaction at a time
         let finalData = []
         for (let i = 0; i < tableData['count']; i++) {
-            let entry = data['transaction_list'][i];
+            let entry = tableData['transaction_list'][i];
             let pushEntry = true;
 
             // Apply type filter
@@ -161,7 +154,7 @@ function TableContainer({reload=0, query, queryType, transactionType}) {
     }
 
     /* FILTER DATA, THEN GENERATED CURRENT PAGE */
-    function filterAndGeneratePage() {
+    function filterAndGeneratePage(data) {
         setFilteredData(generateFilteredData(data));
     }
 
@@ -178,7 +171,7 @@ function TableContainer({reload=0, query, queryType, transactionType}) {
 
             res = JSON.parse(JSON.stringify(res));
 
-            setData(res);
+            filterAndGeneratePage(res);
 
         } catch(e) {
             console.error(e);

@@ -2,6 +2,7 @@
     display: flex;
     width: 80%;
     justify-content: center;
+    align-items: baseline;
 }
 
 .page-nav {
@@ -16,6 +17,18 @@
 }
 
 .page-input {
+    display: inline-block;
     width: 20%;
     text-align: center;
+    background-color: #bac6d8;
+    padding: 1px 1px;
+    border: solid rgb(32, 32, 32) 3px;
+    border-radius: 4px;
+}
+
+.nav-button {
+    height: 3vh;
+    margin-left: 2px;
+    margin-right: 2px;
+    font-size: calc(2px + 0.4vh + 0.4vw);
 }

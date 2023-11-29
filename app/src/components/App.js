@@ -7,8 +7,6 @@ import RightHeader from './RightHeader';
 
 function App() {
 
-  console.log('App Render')
-
   // Global filters
   const [currentFilters, setCurrentFilters] = useState(
     {
@@ -34,10 +32,10 @@ function App() {
 
   return (
     <div className="app">
-      <header className="app-header">
+      <div className="app-header">
         <LeftHeader />
         <RightHeader />
-      </header>
+      </div>
       <div className="app-body">
         <FilterContainer setAppFilters={setFiltersWrapper}/>
         <TableContainer reload={reload} queryType={currentFilters['queryType']} query={currentFilters['query']} transactionType={currentFilters['transactionType']}/>

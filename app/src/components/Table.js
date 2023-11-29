@@ -46,7 +46,9 @@ function Table({ data }) {
 
             // Convert entry dictionary into a list
             for (let j = 0; j < data['fieldCount']; j++) {
-                if (data['fields'][j] ==='game') {
+                if (data['fields'][j] === 'id') {
+                    current_entry.push(parseInt(data['transaction_list'][i]['id']) + 1);
+                } else if (data['fields'][j] === 'game') {
                     if (data['transaction_list'][i]['game'].includes('Trading Card')) {
                         trading_card = true;
                         current_entry.push(data['transaction_list'][i]['game'].replace('Trading Card', '').replace('Foil', ''));

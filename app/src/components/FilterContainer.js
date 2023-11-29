@@ -3,8 +3,6 @@ import React, { useState } from 'react';
 
 function FilterContainer({setAppFilters}) {
 
-    console.log('FilterContainer Render');
-
     // Local filter state, updates the global filter state when apply filters button is pressed
     // Must be declared exactly the same as global filter state
     const [currentFilters, setCurrentFilters] = useState(
@@ -25,8 +23,6 @@ function FilterContainer({setAppFilters}) {
         let tempFilters = currentFilters;
         tempFilters['queryType'] = value;
         setCurrentFilters(tempFilters);
-        console.log('FilterContainer: ');
-        console.log(currentFilters);
     }
 
     function setQueryWrapper(value) {
@@ -34,8 +30,6 @@ function FilterContainer({setAppFilters}) {
         let tempFilters = currentFilters;
         tempFilters['query'] = value;
         setCurrentFilters(tempFilters);
-        console.log('FilterContainer: ');
-        console.log(currentFilters);
     }
 
     function setTransactionTypeWrapper(value) {
@@ -43,8 +37,6 @@ function FilterContainer({setAppFilters}) {
         let tempFilters = currentFilters;
         tempFilters['transactionType'] = value;
         setCurrentFilters(tempFilters);
-        console.log('FilterContainer: ');
-        console.log(currentFilters);
     }
 
     // Filters: name query (str, null), game query (str, null), type (sale, purchase, listing, null), 3rd party name query (str, null),

@@ -1,15 +1,26 @@
 
 .right-header {
-    min-width: 22%;
-    min-height: 12vh;
+    width: 50%;
+    height: 100%;
     display: flex;
+    position: relative;
     justify-content: flex-end;
     align-items: center;
-    margin-right: 3vw;
 }
 
 .settings-button {
+    position: relative;
     font-family: 'Inter', 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
+    right: 5%;
+}
+
+.load-data-button {
+    position: relative;
+    font-family: 'Inter', 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+    right: 6%;
+
 }

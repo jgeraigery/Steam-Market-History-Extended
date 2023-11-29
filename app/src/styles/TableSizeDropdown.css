@@ -14,6 +14,7 @@
 
 .drop-down-value {
     display: inline-block;
+    text-align: center;
     width: 100%;
     background-color: #bac6d8;
     padding: 1px 1px;
