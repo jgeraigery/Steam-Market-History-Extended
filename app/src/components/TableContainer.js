@@ -2,48 +2,131 @@ import '../styles/TableContainer.css';
 import React, { useState, useEffect } from 'react';
 import Table from './Table'
 import TableSizeDropdown from './TableSizeDropdown';
+import TableNavBar from './TableNavBar';
 
 function TableContainer({reload=0, query, queryType, transactionType}) {
+    /* STATES */
 
-    const [tableData, setTableData] = useState(null);
-    const [tableSize, setTableSize] = useState(50);
+    // State of loaded data
+    const [data, setData] = useState(null);
+
+    // State of filtered data
+    const [filteredData, setFilteredData] = useState(null);
+
+    // State of current page
+    const [page, setPage] = useState(null);
+    const [pageSize, setPageSize] = useState(10);
+    const [pageIndex, setPageIndex] = useState(0);
+    const [numPages, setNumPages] = useState(1);
+
+    /* HANDLE FILTER CHANGES */
+    useEffect(
+        () => {
+            setPageIndex(
+                0, 
+                filterAndGeneratePage()
+            )
+        }, [reload]
+    );
+
+    /* HANDLE DATA FETCHING */
+    useEffect(
+        () => {
+            filterAndGeneratePage();
+        }, [data]
+    );
 
     useEffect(
         () => {
-            console.log('TableContainer: ');
-            console.log(queryType);
-            console.log(query);
-            console.log(transactionType);
-            console.log(reload);
-            getMarketData(tableSize);
-        }, [reload]
+            setNumPages(calcNumPages);
+            generatePage();
+        }, [filteredData]
+    );
+
+    /* HANDLE CHILD STATE VALUE UPDATES */
+    useEffect (
+        () => {
+            let s = calcNumPages();
+            if (s !== numPages) {
+                setNumPages(s);
+            }
+            setPageIndex(0);
+            generatePage();
+        }, [pageSize]
     )
 
-    console.log('TableContainer Render');
+    useEffect(
+        () => {
+            generatePage();
+        }, [pageIndex]
+    )
 
-    function handleDropdownClick(val) {
-        setTableSize(val);
-        getMarketData(val);
+    /* GETTERS FOR CHILDREN */
+    function calcNumPages() {
+        if (filteredData === null) {
+            return 1;
+        }
+        return Math.ceil(filteredData['count'] / pageSize);
     }
 
-    function applyFilters(data) {
-        if (data === null) {
+    /* VALUE CHANGE HANDLERS */
+    function handlePageSizeChange(val) {
+        if (filteredData === null) {
+            return;
+        } else if (val === 'All') {
+            val = filteredData['count'];
+        }
+        setPageSize(val);
+    }
+
+    function handlePageIndexChange(val) {
+        if (val >= 0 && val < numPages) {
+            setPageIndex(val);
+        } else {
+            setPageIndex(numPages - 1,);
+        }
+    }
+
+    /* TABLE DATA FUNCTIONS */
+
+    function applyPartition(tableData) {
+        if (tableData === null) {
+            return null;
+        }
+        let finalPageSize = tableData['count'] % pageSize;
+        let start = pageSize * pageIndex;
+        let end = (start + pageSize) <= tableData['count'] ? start + pageSize: start + finalPageSize;
+
+        let currentPage = [];
+        for (let i = start; i < end; i++) {
+            currentPage.push(tableData['transaction_list'][i])
+        }
+        let tableClone = structuredClone(tableData);
+        tableClone['transaction_list'] = currentPage;
+        tableClone['count'] = end - start;
+        return tableClone;
+    }
+
+    /* GENERATE FILTERED DATA FROM ALL DATA */
+    function generateFilteredData(tableData) {
+        if (tableData === null) {
             return null;
         }
         // Tracks size of filtered list
-        let newCount = data['count'];
+        let newCount = tableData['count'];
 
         // Unpack the filters
         let queryLabel = queryType;
         let queryString = query.toLowerCase();
         let tType = transactionType;
 
-        // Approach: Look through each individual transaction and decide if it should stay
+        // Approach: Look through each individual transaction and decide if it should be removed
         // This applies filters sequentially to one transaction at a time
         let finalData = []
-        for (let i = 0; i < data['count']; i++) {
+        for (let i = 0; i < tableData['count']; i++) {
             let entry = data['transaction_list'][i];
             let pushEntry = true;
+
             // Apply type filter
             if (!(tType === 'all' || entry['gain_or_loss'] === tType)) {
                 pushEntry = false;
@@ -62,14 +145,30 @@ function TableContainer({reload=0, query, queryType, transactionType}) {
         }
 
         // Reassign transaction list and count
-        data['transaction_list'] = finalData;
-        data['count'] = newCount;
-        return data;
+        let tableClone = structuredClone(tableData)
+        tableClone['transaction_list'] = finalData;
+        tableClone['count'] = newCount;
+        return tableClone;
     }
 
-    async function getMarketData(amount) {
+    /* GENERATE THE CURRENT PAGE TO DISPLAY IN TABLE FROM FILTERED DATA*/
+    function generatePage() {
+        if (filteredData === null) {
+            return null;
+        }
+
+        setPage(applyPartition(filteredData));
+    }
+
+    /* FILTER DATA, THEN GENERATED CURRENT PAGE */
+    function filterAndGeneratePage() {
+        setFilteredData(generateFilteredData(data));
+    }
+
+    /* FETCH DATA FROM THE BACKEND -> SAVE FILTERED DATA IN STATE -> GENERATE PAGE */
+    async function getMarketData() {
         try {
-            const response = await fetch('http://127.0.0.1:8000/get_market_data/?amount=' + amount.toString(),
+            const response = await fetch('http://127.0.0.1:8000/get_market_data/?amount=All',
                 {
                     method: 'GET',
                     mode: 'cors',
@@ -77,9 +176,9 @@ function TableContainer({reload=0, query, queryType, transactionType}) {
             )
             let res = await response.json();
 
-            res = applyFilters(JSON.parse(JSON.stringify(res)));
+            res = JSON.parse(JSON.stringify(res));
 
-            setTableData(res);
+            setData(res);
 
         } catch(e) {
             console.error(e);
@@ -89,11 +188,11 @@ function TableContainer({reload=0, query, queryType, transactionType}) {
     return(
         <div className='table-container'>
             <div className='top-bar'>
-                <button className='app-button refresh-button' onMouseDown={(e) => e.preventDefault()} onClick={() => getMarketData(tableSize)}>Refresh</button>
-
-                <TableSizeDropdown handleClick={handleDropdownClick} val={tableSize}/>
+                <button className='app-button refresh-button' onMouseDown={(e) => e.preventDefault()} onClick={getMarketData}>Refresh</button>
+                <TableNavBar pageIndex={pageIndex} changePageIndex={handlePageIndexChange} numPages={numPages}/>
+                <TableSizeDropdown handleClick={handlePageSizeChange} />
             </div>
-            <Table data={tableData}/>
+            <Table data={page}/>
         </div>
     );
 }

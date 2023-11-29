@@ -3,8 +3,6 @@ import React from 'react';
 
 function Table({ data }) {
 
-    console.log('Table Render');
-
     let head = null;
     let body = null;
 

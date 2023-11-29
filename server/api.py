@@ -33,8 +33,8 @@ def get_market_data(amount):
     data = json.load(f)
     transaction_list = data['transaction_list']
 
-    if amount not in ['50', '100', '200', '300', '400', '500', 'All']:
-        amount = 50
+    if amount not in ['10', '50', '100', '200', '300', '400', '500', 'All']:
+        amount = 10
     elif amount == 'All':
         amount = data['count']
     amount = int(amount)
