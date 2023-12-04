@@ -20,15 +20,15 @@
   min-height: 93vh;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
-  align-items: baseline;
+  justify-content: left;
+  align-items: start;
 }
 
 .app-button {
   align-items: center;
   background-color: initial;
   background-image: linear-gradient(#58616b, #32373d);
-  border-radius: 4px;
+  border-radius: 3px;
   border-width: 0;
   box-shadow: 0 5px 10px rgba(0, 0, 0, .1),0 3px 6px rgba(0, 0, 0, .05);
   box-sizing: border-box;

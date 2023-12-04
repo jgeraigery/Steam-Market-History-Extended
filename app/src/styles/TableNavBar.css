@@ -1,33 +1,37 @@
 .nav-bar {
     display: flex;
-    width: 80%;
+    height: 100%;
+    width: 100%;
     justify-content: center;
-    align-items: baseline;
+    align-items: flex-end;
 }
 
 .page-nav {
-    width: 13%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 150px;
     margin-right: 2%;
     margin-left: 2%;
 }
 
 .page-label {
-    width: 80%;
+    min-width: 40px;
     color: white;
 }
 
 .page-input {
     display: inline-block;
-    width: 20%;
+    min-width: 30px;
+    max-width: 35px;
     text-align: center;
     background-color: #bac6d8;
-    padding: 1px 1px;
     border: solid rgb(32, 32, 32) 3px;
     border-radius: 4px;
 }
 
 .nav-button {
-    height: 3vh;
+    height: 50%;
     margin-left: 2px;
     margin-right: 2px;
     font-size: calc(2px + 0.4vh + 0.4vw);

@@ -1,56 +1,103 @@
 
 .filter-container {
-    max-width: 15vw;
-    min-width: 15vw;
+    max-width: 18vw;
+    min-width: 18vw;
     display: flex;
+    margin-left: 2vw;
+    margin-right: 2vw;
+    margin-top: 10vh;
+    padding-bottom: 2vh;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-    padding-top: 5vh;
+    align-items: stretch;
+    background-color: #2d3641;
+    box-shadow: 0px 0px 10px 7px rgb(0,0,0,0.1);
 }
 
 .filter-header {
-    display: inline-block;
+    display: flex;
+    background-color: #262d36;
+    color: #afb7c0;
     width: 100%;
     height: calc(45px + 0.8vh);
-    text-align: center;
-    border-bottom: solid white 2px;
+    justify-content: center;
+    align-items: center;
 }
 
 .filter-text {
-    color: white;
+    color: #e0e8f0;
 }
 
 .filters {
     display: flex;
+    width: 100%;
     flex-direction: column;
-    justify-content: baseline;
+    justify-content: flex-start;
+    align-items: flex-start;
 }
 
 .filter-item {
     margin-top: 1vh;
+    width: 100%;
 }
 
-.login-button {
-    margin: 1vh;
+.filter-buttons {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.apply-button {
+    width: auto;
+}
+
+.clear-button {
+    width: auto;
+}
+
+.search-bar-container {
+    border: none;
+    background-color: #2d3641;
+    display: flex;
+    width: 90%;
+    padding: 0% 5% 0% 5%;
+    height: 30px;
+    align-items: center;
+}
+
+.transaction-type {
+    margin-left: 5%;
 }
 
 .select-box {
-    background-color: #bac6d8;
-    border-color: black;
+    width: 40%;
+    text-align: left;
+    appearance: none;
+    outline: 0;
+    color: white;
+    background-color: #2d3641;
+    background-image: url('../assets/circle-chevron-down-solid.svg');
+    font-family: 'Inter', 'Segoe UI', 'Roboto', 'Oxygen',
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue';
+    background-position: right;
+    background-repeat: no-repeat;
+    border: 0;
+    border-color: none;
+    height: 100%;
 }
 
 .search-box {
-    box-sizing: border-box;
-    background-color: #bac6d8;
-    min-height: 30px;
-    margin: 10px 0px;
-    border: 2px solid #2d3641;
-    border-radius: 5px;
+    border: none;
+    background-color: #2d3641;
+    padding-left: 5%;
+    padding-right: 5%;
+    width: 60%;
+    height: 100%;
+    color: white;
 }
 
 .search-box:focus {
     outline: none !important;
-    border: 3px solid #434f5e;
     box-shadow: 0px 0px 8px 4px rgb(0,0,0, 0.1);
 }

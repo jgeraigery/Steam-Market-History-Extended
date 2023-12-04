@@ -4,18 +4,27 @@
     min-width: 75vw;
     display: flex;
     flex-direction: column;
-    padding-top: 5vh;
+    margin-top: 2vh;
     margin-bottom: 3vh;
 }
 
 .top-bar {
+    display: inline-grid;
+    width: 100%;
+    grid-template-columns: 10% 80% 10%;
+    grid-template-rows: 100%;
+    gap: 0px;
+    height: 6vh;
+}
+
+.refresh-button-container {
+    height: 100%;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+    align-items: flex-end;
 }
 
 .refresh-button {
     color: white;
-    height: 3vh;
+    height: 50%;
+    width: 50%;
 }

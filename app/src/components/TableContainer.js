@@ -4,7 +4,7 @@ import Table from './Table'
 import TableSizeDropdown from './TableSizeDropdown';
 import TableNavBar from './TableNavBar';
 
-function TableContainer({reload=0, query, queryType, transactionType}) {
+function TableContainer({reload=0, query, queryType, all, sale, purchase, listing, cancellation}) {
     /* STATES */
 
     // State of filtered data
@@ -111,7 +111,8 @@ function TableContainer({reload=0, query, queryType, transactionType}) {
         // Unpack the filters
         let queryLabel = queryType;
         let queryString = query.toLowerCase();
-        let tType = transactionType;
+        let tAll = all;
+        let tType = [sale, purchase, listing, cancellation];
 
         // Approach: Look through each individual transaction and decide if it should be removed
         // This applies filters sequentially to one transaction at a time
@@ -121,8 +122,16 @@ function TableContainer({reload=0, query, queryType, transactionType}) {
             let pushEntry = true;
 
             // Apply type filter
-            if (!(tType === 'all' || entry['gain_or_loss'] === tType)) {
-                pushEntry = false;
+            if (!tAll) {
+                if (!sale && entry['gain_or_loss'] == 'Sale') {
+                    pushEntry = false;
+                } else if (!purchase && entry['gain_or_loss'] == 'Purchase') {
+                    pushEntry = false;
+                } else if (!listing && entry['gain_or_loss'] == 'Listing') {
+                    pushEntry = false;
+                } else if (!cancellation && entry['gain_or_loss'] == 'Cancellation') {
+                    pushEntry = false;
+                }
             }
             // Apply search query 
             if (!(entry[queryLabel].toLowerCase().includes(queryString))) {
@@ -181,7 +190,11 @@ function TableContainer({reload=0, query, queryType, transactionType}) {
     return(
         <div className='table-container'>
             <div className='top-bar'>
-                <button className='app-button refresh-button' onMouseDown={(e) => e.preventDefault()} onClick={getMarketData}>Refresh</button>
+                <div className='refresh-button-container'>
+                    <button className='app-button refresh-button' onMouseDown={(e) => e.preventDefault()} onClick={getMarketData}>
+                        <i className="fa-solid fa-arrows-rotate" style={{color: 0o0}}></i>
+                    </button>
+                </div>
                 <TableNavBar pageIndex={pageIndex} changePageIndex={handlePageIndexChange} numPages={numPages}/>
                 <TableSizeDropdown handleClick={handlePageSizeChange} />
             </div>

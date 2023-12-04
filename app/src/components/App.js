@@ -12,7 +12,11 @@ function App() {
     {
         'queryType': 'name',
         'query': '',
-        'transactionType': 'all',
+        'all': true,
+        'sale': false,
+        'purchase': false,
+        'listing': false,
+        'cancellation': false,
     }
   );
   // Tracks and controls table reloads
@@ -20,11 +24,7 @@ function App() {
 
   function setFiltersWrapper(val) {
     // Check if values changed - Unsafe, so order matters
-    console.log('App: ');
-    console.log(JSON.stringify(currentFilters));
-    console.log(JSON.stringify(val));
     if (JSON.stringify(currentFilters) !== JSON.stringify(val)) {
-      console.log('Filters updated');
       setCurrentFilters(structuredClone(val));
       setReload(reload + 1);
     }
@@ -38,7 +38,16 @@ function App() {
       </div>
       <div className="app-body">
         <FilterContainer setAppFilters={setFiltersWrapper}/>
-        <TableContainer reload={reload} queryType={currentFilters['queryType']} query={currentFilters['query']} transactionType={currentFilters['transactionType']}/>
+        <TableContainer
+          reload={reload}
+          queryType={currentFilters['queryType']}
+          query={currentFilters['query']}
+          all={currentFilters['all']}
+          sale={currentFilters['sale']}
+          purchase={currentFilters['purchase']}
+          listing={currentFilters['listing']}
+          cancellaction={currentFilters['listing']}
+        />
       </div>
     </div>
   );
