@@ -26,18 +26,17 @@ app.add_middleware(
 def read_root():
     return {'Hello': 'World'}
 
+@app.get('/stats')
+def get_stats():
+    return {'Stats': 'Page'}
+
 @app.get('/get_market_data/')
-def get_market_data(amount):
+def get_market_data():
 
     f = open('./market_data.json', 'r', encoding='utf-8')
     data = json.load(f)
     transaction_list = data['transaction_list']
-
-    if amount not in ['10', '50', '100', '200', '300', '400', '500', 'All']:
-        amount = 10
-    elif amount == 'All':
-        amount = data['count']
-    amount = int(amount)
+    amount = int(data['count'])
 
     new_list = []
     for i, t in enumerate(transaction_list):
