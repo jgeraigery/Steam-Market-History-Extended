@@ -1,5 +1,4 @@
 ## STEAM MARKET HISTORY EXTENDED
-A web app to overhaul the Steam market history UI.
 The Steam market UI has been nearly featureless for 10+ years now. This provides a clean UI overhaul with various additional features.
 
 ## FEATURES
